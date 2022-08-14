@@ -115,4 +115,129 @@ class App extends React.Component {
     this.setState({ dataSearch: !value ?  [] : filtered});   
   }
 
+   //#endregion
+
+   render() {  
+    return (
+      <>     
+        <nav className="navbar navbar-dark bg-primary">
+          <div className='nav'>
+          <br />
+            <a class="navbar-brand">Yanersys Jimenez</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Button>< FaFacebook/></Button> &nbsp;&nbsp;&nbsp;&nbsp;
+            <Button><FaGithub/></Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <br />
+          <br /> 
+            <form  class="d-flex">
+              
+              <input class="form-control me-2" onChange={this.filtrar} type="search" placeholder="Search" aria-label="Search"></input>              
+            </form>
+            </div>
+        </nav>        
+          
+        
+
+
+        <Container className='caixa'>  
+        <br />
+            <h1 className='titulo'>Meus Contatos</h1>
+             <ul><Relogio /></ul>
+            <Button className='user' onClick={()=>this.mostrarModalInsertar()}><FaUserPlus/></Button>
+           
+           
+          <Contatos
+          
+            data = {this.state.dataSearch.length ? this.state.dataSearch : this.state.data}
+            eliminar = {this.mostrarConfirmacion}
+            editar = {this.mostrarModalActualizar}
+          />   
+          <br/>
+          <br/> 
+        </Container>
+        {/* Modal insertar */}
+        <Modal isOpen = {this.state.modalInsertar}>
+          <ModalHeader>
+            <div>
+              <h3>Inserir Contato</h3>
+            </div>       
+          </ModalHeader>
+
+          <ModalBody>
+            <FormGroup>
+              <label>id:</label> 
+              <input className="form-control" readOnly type= "text" value = {this.state.data.length+1}/>
+            </FormGroup> 
+
+            <FormGroup>
+              <label>Nome</label> 
+              <input className="form-control" name="nome" type= "text" onChange={this.handleChange}/>
+            </FormGroup> 
+
+            <FormGroup>
+              <label>Telefone</label> 
+              <input className="form-control" name="telefone" type= "text" onChange={this.handleChange}/>
+            </FormGroup> 
+            <FormGroup>
+              <label>E-mail</label> 
+              <input className="form-control" name="Correio" type= "text" onChange={this.handleChange}/>
+            </FormGroup> 
+          </ModalBody>
+
+          <ModalFooter>
+            <Button color="primary" onClick={() => this.insertar()}><FaRegThumbsUp /></Button>
+            <Button color="danger" onClick={() => this.cerrarModalInsertar()}> <FaRegThumbsDown /></Button>
+          </ModalFooter>
+        </Modal>
+
+
+        {/* Modal actualizar */}
+        <Modal isOpen={this.state.modalActualizar}>
+          <ModalHeader>
+            <div>
+                <h3>Editar Contato</h3>
+            </div>       
+          </ModalHeader>
+
+          <ModalBody>
+            <FormGroup>
+              <label>id:</label> 
+              <input className="form-control" readOnly type= "text" value={this.state.form.id}/>
+            </FormGroup> 
+
+            <FormGroup>
+              <label>Nome</label> 
+              <input className="form-control" name="nome" type= "text" onChange={this.handleChange} value={this.state.form.nome}/>
+            </FormGroup> 
+
+            <FormGroup>
+              <label>Telefone</label> 
+              <input className="form-control" name="telefone" type= "text" onChange={this.handleChange} value={this.state.form.telefone}/>
+            </FormGroup> 
+            <FormGroup>
+              <label>E-mail</label> 
+              <input className="form-control" name="Correio" type= "text" onChange={this.handleChange} value={this.state.form.Correio}/>
+            </FormGroup> 
+          </ModalBody>
+
+          <ModalFooter>
+            <Button color="primary" onClick={()=>this.editar(this.state.form)}><FaRegThumbsUp /></Button>
+            <Button color="danger" onClick={()=>this.cerrarModalActualizar()}> <FaRegThumbsDown /></Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen = {this.state.modalConfirmacion}>
+          <ModalHeader>
+            <h4> Deseja excluir este registro? </h4>
+          </ModalHeader>
+          <ModalBody>
+            <Button color="success" onClick={()=> this.eliminar(this.state.form)}><FaRegThumbsUp /> </Button> {"   "}
+            <Button color="danger" onClick={()=>this.cerrarConfirmacion()}> <FaRegThumbsDown /></Button>
+          </ModalBody>        
+        </Modal>      
+      </>
+    );
+  }
+}
+
+export default App;
+
 
